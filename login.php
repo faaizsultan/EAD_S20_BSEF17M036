@@ -51,16 +51,8 @@ if(isset($_REQUEST["btnSubmit"]))
                 die ('Could not connect to the database server' . mysqli_connect_error());
             }
         }
-        
-        
-        
-        
-        echo "<script type='text/javascript'>alert('$uname');</script>";
-        echo "<script type='text/javascript'>alert('$pass');</script>";
 
         $query="Select uname,pass from assig1.users WHERE uname='$uname' AND pass='$pass'"; //getting data from database..
-        echo "<script type='text/javascript'>alert('nOW EUERY');</script>";
-        echo "<script type='text/javascript'>alert('$query');</script>";
         $result=mysqli_query($con,$query);
         $recordsFound=mysqli_num_rows($result);
 
@@ -77,11 +69,10 @@ if(isset($_REQUEST["btnSubmit"]))
         }
     }
     else
-        echo "<script type='text/javascript'>alert('Username And PAssword is MAndatory');</script>";
+        echo "<script type='text/javascript'>alert('Username And Password is MAndatory');</script>";
 }
 
 ?>
-
 
 <form  method="POST">
   <label for="fname">User name:</label><br>
