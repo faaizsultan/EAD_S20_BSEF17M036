@@ -28,11 +28,20 @@
                 else 
                     echo json_encode("Didnt registered Succefully");
             }       
-            else if($action=="registerFolder")
+            else if($action=="makeNewFolder")
             {
-                $parentFolderId=$_REQUEST["parentFolderId"];
-                $folderName=$_REQUEST["folderName"];
-                $query="INSERT INTO assig1.usertable(folderName,parentFolderId) values('$folderName','$parentFolderId')";
+                $pid=$_REQUEST["pFid"];
+                $fname=$_REQUEST["fname"];
+                $query;
+                if($pid==0)
+                {
+                    $query="INSERT INTO assig1.usertable(folderName) VALUES('$fname')";
+                }
+                else
+                {
+                    $query="INSERT INTO assig1.usertable(folderName,parentFolderId) VALUES('$fname','$pid')";
+                }
+
                 if(mysqli_query($con,$query)==true)
                 {
                     echo json_encode("Folder Created Successfully.");

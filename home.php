@@ -20,6 +20,7 @@
 	}
 </style>
 <script>
+var newFolderLocationId=0;
 $(document).ready(function(){
   
     var dataToSend = {"action": "viewParentFolders"};
@@ -29,23 +30,18 @@ $(document).ready(function(){
 				dataType: "json",
 				url: "registerApi.php",
 				data: dataToSend,
-				success: Mysucfunction,
+				success: mainfolders,
 				error: OnError
             };
             
 			$.ajax(settings);
 			console.log('request sent');
         });
-function Mysucfunction(r){
-    console.log(r);
-    console.log(r[1].folderName);
-
+function mainfolders(r){
     for (let index = 0; index < r[0].length; index++){
         let btname=r[index+1].folderName;
-        console.log(btname);
         let identity=r[index+1].ID;
-        console.log("PRinting Id ="+identity);
-        let buttons = $('<input><br>').attr({  id:identity,  type: 'button', name:'btn1', value:btname, class:'btn btn-success',onClick:"changeColor(this.id)", ondblclick:"showChild(this.id)" });
+        let buttons = $('<input></input>').attr({  id:identity,  type: 'button', name:'btn1', value:btname, class:'btn btn-success',onClick:"changeColor(this.id)", ondblclick:"showChild(this.id)" });
         $("#btdiv").append(buttons);
     }
 }
@@ -56,16 +52,28 @@ function OnError(f){
 </script>
 <script>
 function changeColor(idofbtn){
-    console.log(idofbtn);
     var b=document.getElementById(idofbtn);
-    console.log("Changing color"+b);
 }
 function showChild(i)
 {
- var b=$("#pdiv");
- $("#btdiv").remove();
-  var datatosend={"action":"showChildFolders","id":i};
-  var set= {
+ newFolderLocationId=i; //storing the id in global variable to dentify where to make the new folder..
+ 
+ var foldername=document.getElementById("foldernameplace");  //now removeing the folder name..
+ while(foldername.firstChild){   
+     foldername.removeChild(foldername.lastChild);
+   }
+var text=document.createElement('p');
+text.innerText=$("#"+i).attr("value");
+foldername.appendChild(text); //making the child folder as the main folder name..
+
+   var p=document.getElementById("btdiv"); //now removing the child folders..
+   console.log(p);
+   while(p.firstChild){
+     p.removeChild(p.lastChild);
+   }
+
+  let datatosend={"action":"showChildFolders","id":i};
+  let set= {
 				type: "POST",
 				dataType: "json",
 				url: "registerApi.php",
@@ -78,16 +86,44 @@ function showChild(i)
 			console.log('request sent for child folders');
 }
 function makenewChild(childs){
+    console.log("Make New Childs");
     for (let index = 0; index < childs[0].length; index++) {
         let btname=childs[index+1].folderName;
-        console.log(btname);
         let ident=childs[index+1].ID;
-        
-        let butt = $('<input><br>').attr({  id:ident,  type: 'button', name:'btn1', value:btname, class:'btn btn-success',onClick:"changeColor(this.id)", ondblclick:"showChild(this.id)" });
-        $("#pdiv").append(butt);
-        console.log(butt);
+        let butt = $('<input></input>').attr({  id:ident,  type: 'button', name:'btn1', value:btname, class:'btn btn-success',onClick:"changeColor(this.id)", ondblclick:"showChild(this.id)" });
+        $("#btdiv").append(butt);
   }
 }
+</script>
+<script> // make  a new folder..
+function makefolder(){
+  let  newFname=document.getElementById("newFolderName").value;
+  console.log(newFname);
+  if(newFname=="")
+  {
+    alert("Name is must for a folder...");
+  }
+  else
+  {
+    let datatosend={"action":"makeNewFolder","pFid":newFolderLocationId,"fname":newFname};
+    let set= {
+				type: "POST",
+				dataType: "json",
+				url: "registerApi.php",
+				data: datatosend,
+				success: makefolderSuccess,
+				error: OnError
+            };
+            
+			$.ajax(set);
+			console.log('request sent for child folders');
+
+  } 
+}
+function makefolderSuccess(r){
+  alert(r);
+}
+
 </script>
 
 <?php
@@ -99,16 +135,6 @@ if(isset($_SESSION["user"])==false)
 }
 
 ?>
-<script>
-$("#ch").click(function(){
-
-alert("Clicked");
-
-});
-function check(){
-    
-}
-</script>
 
 <body>
 
@@ -129,12 +155,12 @@ function check(){
         </button>
       </div>
       <div class="modal-body" id="folderdiv">
-        
+       Enter the Name Of your Folder: <input type="text" name="newFolderName" id="newFolderName">
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
+      <!-- <div class="modal-footer"> -->
+        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+        <button type="button" class="btn btn-primary" id="btnCreateFolder" onClick="makefolder()">Create new Folder</button>
+      <!-- </div> -->
     </div>
   </div>
 </div>
@@ -143,10 +169,12 @@ function check(){
 <div class="container-fluid" id="pdiv">
     <div class="p-3 mb-2 bg-dark text-white" id="divname">
         <h2>Folders</h2>
+        <div id="foldernameplace">
+        <p>Main Folders<p>
+        </div>
     </div>
     <div id="btdiv">
-
-<h2>Here i am </h2>
+        
     </div>
 </div>
 
