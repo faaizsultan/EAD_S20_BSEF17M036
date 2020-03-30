@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using Assig2.BAL;
+using UserData;
 namespace Assignment2
 {
     static class Program
@@ -14,6 +15,9 @@ namespace Assignment2
         [STAThread]
         static void Main()
         {
+            String applicationBAsePath = System.IO.Path.GetDirectoryName(Application.ExecutablePath);//creating Images Folder..
+            System.IO.Directory.CreateDirectory(applicationBAsePath + @"\images\");
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new mainScreen());

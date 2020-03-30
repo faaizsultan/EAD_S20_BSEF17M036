@@ -41,13 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="UserDataBaseObjects.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Assig2.BAL\Assig2.BAL.csproj">
-      <Project>{e2c54fb4-da93-4f8f-ac00-0c0d7cc65793}</Project>
-      <Name>Assig2.BAL</Name>
+    <ProjectReference Include="..\UserData\UserData.csproj">
+      <Project>{f217bb57-c90b-404c-9ce5-265f8b5a4001}</Project>
+      <Name>UserData</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

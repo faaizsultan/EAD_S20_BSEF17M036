@@ -138,6 +138,10 @@
       <Project>{e2c54fb4-da93-4f8f-ac00-0c0d7cc65793}</Project>
       <Name>Assig2.BAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\UserData\UserData.csproj">
+      <Project>{f217bb57-c90b-404c-9ce5-265f8b5a4001}</Project>
+      <Name>UserData</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

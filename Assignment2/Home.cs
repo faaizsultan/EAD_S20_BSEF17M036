@@ -17,9 +17,24 @@ namespace Assignment2
             InitializeComponent();
         }
 
+        public Home(String fileName,String userName)
+        {
+            InitializeComponent();
+            pictureBox1.Load(fileName);
+            label1.Text = "Welcome " + userName;
+           
+        }
+
         private void button2_Click(object sender, EventArgs e)
         {
-            
+            this.Close();
+            var f1 = Application.OpenForms["mainScreen"];
+            if (f1 != null)
+            {
+                this.Hide();
+                f1.Show();
+            }
+
         }
 
         private void Home_Load(object sender, EventArgs e)
