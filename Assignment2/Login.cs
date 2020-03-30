@@ -42,11 +42,11 @@ namespace Assignment2
         {
             if(textBox1.Text.Trim().Length==0)
             {
-                MessageBox.Show("USer Naem Missing!!");
+                MessageBox.Show("Login Missing!!");
             }
             else if (textBox2.Text.Length == 0)
             {
-                MessageBox.Show("USer Naem Missing!!");
+                MessageBox.Show("Password Missing!!");
             }
             else
             {
@@ -62,6 +62,27 @@ namespace Assignment2
                 else
                     MessageBox.Show("Not A Valid User!");
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            String email =textBox3.Text.Trim();
+            if(email.Length==0 || (!email.Contains("@")) || (!email.Contains(".com")))
+            {
+                MessageBox.Show("Not A Valid Email Entered");
+            }
+            else
+            {
+                if(UserBusinessObjects.sendEmail(email))
+                {
+                    MessageBox.Show("A Verification Code has been sent to your email");
+                    this.Hide();
+                    Enter_Reset_Code obj = new Enter_Reset_Code();
+                    
+                    obj.Show();
+                }
+            }
+            
         }
     }
 }

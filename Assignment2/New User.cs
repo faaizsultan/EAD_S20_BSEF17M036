@@ -94,7 +94,7 @@ namespace Assignment2
                 {
                     MessageBox.Show("Your Age Canot be ZERO!");
                 }
-                else if((!u.Email.Contains("@")) || (!u.Email.Contains(".")))
+                else if((!u.Email.Contains("@")) || (!u.Email.Contains(".com")))
                 {
                     MessageBox.Show("Not a Valid Email Address");
                 }
