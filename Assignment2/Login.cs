@@ -50,15 +50,14 @@ namespace Assignment2
             }
             else
             {
-                UserDataHolder u=new UserDataHolder();
+                UserDataHolder u = new UserDataHolder();
                 u.Login = textBox1.Text.Trim();
                 u.Password = textBox2.Text;
-                if (UserBusinessObjects.isAlreadyUser(u))
+                if (UserBusinessObjects.isValidUser(u))
                 {
                     this.Hide();
-                    Home obj = new Home();
+                    Home obj = new Home(u);
                     obj.Show();
-
                 }
                 else
                     MessageBox.Show("Not A Valid User!");

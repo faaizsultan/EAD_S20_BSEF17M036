@@ -88,6 +88,8 @@ namespace Assignment2
                     String pathToSaveImage = u.ApplicationPath + @"\images\";
                     String extension = Path.GetExtension(openFileDialog1.FileName);
                     u.ImageName = Guid.NewGuid().ToString() + extension;
+                MessageBox.Show(u.ImageName);
+                MessageBox.Show(filename);
                 if(u.age==0)
                 {
                     MessageBox.Show("Your Age Canot be ZERO!");
@@ -103,7 +105,7 @@ namespace Assignment2
                     pictureBox1.Image.Save(pathToSaveImage);
                     MessageBox.Show("New User Created");
                     this.Hide();
-                    Home obj = new Home(filename,u.userName);
+                    Home obj = new Home(u);
                     obj.Show();
 
                 }

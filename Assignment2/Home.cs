@@ -12,19 +12,20 @@ namespace Assignment2
 {
     public partial class Home : Form
     {
-        String fileName;
+        String pathFromLoad=System.IO.Path.GetDirectoryName(Application.ExecutablePath);
         String userName;
         public Home()
         {
             InitializeComponent();
         }
 
-        public Home(String fileN,String userN)
+        public Home(UserData.UserDataHolder u)
         {
-            this.fileName = fileN;
-            this.userName = userN;
+            this.userName = u.userName;
             InitializeComponent();
-            pictureBox1.Load(fileName);
+            pathFromLoad = pathFromLoad + @"\images\" + u.ImageName;
+            
+            pictureBox1.Load(pathFromLoad);
             label1.Text = "Welcome " + userName;
            
         }
