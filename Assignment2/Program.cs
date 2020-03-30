@@ -20,6 +20,11 @@ namespace Assignment2
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+
+            Console.WriteLine(DateTime.Now.ToShortTimeString());
+            Console.WriteLine(DateTime.Now.ToLongDateString());
+            Console.WriteLine(DateTime.Now.ToShortDateString());
             Application.Run(new mainScreen());
         }
     }

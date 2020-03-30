@@ -299,7 +299,7 @@
             // 
             // openFileDialog1
             // 
-            this.openFileDialog1.Filter = "JPG|*.jpg | PNG|*.png";
+            this.openFileDialog1.Filter = "(JPG,PNG,GIF)|*.JPG;*.PNG;*.GIF\";";
             // 
             // newUser
             // 

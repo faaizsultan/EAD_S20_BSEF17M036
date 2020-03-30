@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using UserData;
 using Assig2.BAL;
+using System.IO;
+
 namespace Assignment2
 {
     public partial class newUser : Form
@@ -58,10 +60,11 @@ namespace Assignment2
             int age = Convert.ToInt32(Math.Round(numericUpDown1.Value, 0));
             
             String NIC = maskedTextBox1.Text;
-            DateTime dateTime = dateTimePicker1.Value;
-            Boolean isHockey = checkBox2.Checked;
-            Boolean isCricket = checkBox3.Checked;
-            Boolean isChess = checkBox4.Checked;
+            String dateTime = dateTimePicker1.Value.ToShortDateString();
+            
+            bool isHockey = checkBox2.Checked;
+            bool isCricket = checkBox3.Checked;
+            bool isChess = checkBox4.Checked;
             //validating the input from User..
             
             u.userName = name;
@@ -73,13 +76,31 @@ namespace Assignment2
             u.age = age;
             u.NIC = NIC;
             u.DOB = dateTime;
-            u.isHockey = isHockey;
-            u.isCricket = isCricket;
-            u.isChess = isChess;
+            u.createdOn = DateTime.Now.ToShortDateString();
+            
+            
+            u.isHockey = isHockey == true ? 1 : 0;
+            u.isCricket = isCricket == true ? 1 : 0;
+            u.isChess = isChess == true ? 1 : 0;
             if (name.Length != 0 && login.Length != 0 && password.Length != 0 && gender.Length != 0 && address.Length != 0  && (maskedTextBox1.MaskCompleted) && (isHockey || isCricket || isChess)  && pictureBox1.Image!=null) 
             {
-                if (UserBusinessObjects.createNewUser(u))
+                    u.ApplicationPath = System.IO.Path.GetDirectoryName(Application.ExecutablePath);
+                    String pathToSaveImage = u.ApplicationPath + @"\images\";
+                    String extension = Path.GetExtension(openFileDialog1.FileName);
+                    u.ImageName = Guid.NewGuid().ToString() + extension;
+                if(u.age==0)
                 {
+                    MessageBox.Show("Your Age Canot be ZERO!");
+                }
+                else if((!u.Email.Contains("@")) || (!u.Email.Contains(".")))
+                {
+                    MessageBox.Show("Not a Valid Email Address");
+                }
+                else if (UserBusinessObjects.createNewUser(u))
+                {
+                    
+                    pathToSaveImage = pathToSaveImage + u.ImageName;
+                    pictureBox1.Image.Save(pathToSaveImage);
                     MessageBox.Show("New User Created");
                     this.Hide();
                     Home obj = new Home(filename,u.userName);

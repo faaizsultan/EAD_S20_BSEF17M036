@@ -12,13 +12,17 @@ namespace Assignment2
 {
     public partial class Home : Form
     {
+        String fileName;
+        String userName;
         public Home()
         {
             InitializeComponent();
         }
 
-        public Home(String fileName,String userName)
+        public Home(String fileN,String userN)
         {
+            this.fileName = fileN;
+            this.userName = userN;
             InitializeComponent();
             pictureBox1.Load(fileName);
             label1.Text = "Welcome " + userName;
