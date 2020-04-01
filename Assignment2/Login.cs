@@ -73,14 +73,16 @@ namespace Assignment2
             }
             else
             {
-                if(UserBusinessObjects.sendEmail(email))
+                int UserID = UserBusinessObjects.getUserIDByEmail(email);
+                if ((UserBusinessObjects.sendEmail(email)) && UserID != 0)
                 {
                     MessageBox.Show("A Verification Code has been sent to your email");
                     this.Hide();
-                    Enter_Reset_Code obj = new Enter_Reset_Code();
-                    
+                    Enter_Reset_Code obj = new Enter_Reset_Code(UserID);
                     obj.Show();
                 }
+                else
+                    MessageBox.Show("Some error Iccured while Sending CODE");
             }
             
         }

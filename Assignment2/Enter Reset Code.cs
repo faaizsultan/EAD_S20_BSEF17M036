@@ -32,8 +32,9 @@ namespace Assignment2
             else if (maskedTextBox1.Text == "0900-7860-1")
             {
                 MessageBox.Show("Code Verified");
-
-
+                this.Close();
+                UpdatePassword obj = new UpdatePassword(userId);
+                obj.Show();
             }
             else
                 MessageBox.Show("Incorrect Code");
