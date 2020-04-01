@@ -39,5 +39,16 @@ namespace Assignment2
             else
                 MessageBox.Show("Incorrect Code");
         }
+
+        private void Enter_Reset_Code_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //this.Close();
+            var f1 = Application.OpenForms["mainScreen"];
+            if (f1 != null)
+            {
+                this.Close();
+                f1.Show();
+            }
+        }
     }
 }

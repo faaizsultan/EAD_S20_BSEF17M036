@@ -73,6 +73,7 @@
             this.Controls.Add(this.label1);
             this.Name = "Enter_Reset_Code";
             this.Text = "Enter Reset Code";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Enter_Reset_Code_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 

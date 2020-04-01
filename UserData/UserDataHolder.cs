@@ -22,11 +22,13 @@ namespace UserData
         public String Address{get; set;}
         public int age { get; set; }
         public String NIC { get; set; }
-        public String  DOB { get; set; }
+        public string  DOB { get; set; }
         public int isCricket { get; set; }
         public int isHockey { get; set; }
         public int isChess { get; set; }
         public String ImageName { get; set; }
-        public String createdOn { get; set; }
+        public string createdOn { get; set; }
+
+        
     }
 }

@@ -31,7 +31,7 @@ namespace Assignment2
 
         private void button1_Click(object sender, EventArgs e)
         {
-            sString newPassword = textBox1.Text;
+            String newPassword = textBox1.Text;
             String confirm = textBox2.Text;
             if(newPassword.Length==0)
             {

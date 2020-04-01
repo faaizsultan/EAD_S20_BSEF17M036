@@ -15,6 +15,9 @@ namespace Assignment2
         public mainScreen()
         {
             InitializeComponent();
+            Console.WriteLine(dateTimePicker1.Value.Date);
+            Console.WriteLine(dateTimePicker1.Value);
+
         }
 
         private void Form1_Load(object sender, EventArgs e)

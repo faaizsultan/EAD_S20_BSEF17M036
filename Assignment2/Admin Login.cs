@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assig2.BAL;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -19,7 +20,24 @@ namespace Assignment2
 
         private void button1_Click(object sender, EventArgs e)
         {
+            
 
+             string Login = textBox1.Text;
+             string Password = textBox2.Text;
+              Login.Trim();
+            if (Login.Length == 0 || Password.Length == 0)
+            {
+                MessageBox.Show("One of the CREDENTIALS is MISSING!!");
+            }
+            else
+            {
+                if(UserBusinessObjects.isAdmin(Login,Password))
+                {
+                    adminPortal obj = new adminPortal();
+                    this.Hide();
+                    obj.Show();
+                }
+            }
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
@@ -32,7 +50,7 @@ namespace Assignment2
             var f1 = Application.OpenForms["mainScreen"];
             if (f1 != null)
             {
-                this.Hide();
+                this.Close();
                 f1.Show();
             }
         }

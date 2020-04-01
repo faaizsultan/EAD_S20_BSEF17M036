@@ -86,5 +86,17 @@ namespace Assignment2
             }
             
         }
+
+        private void Login_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            var f1 = Application.OpenForms["mainScreen"];
+            if (f1 != null)
+            {
+                this.Close();
+                f1.Show();
+            }
+            else
+                this.Close();
+        }
     }
 }
