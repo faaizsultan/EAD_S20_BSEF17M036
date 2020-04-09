@@ -12,7 +12,7 @@
     <input type="text" name="userTable" id="userT"><br>
 
     <label for="lname">Name:</label><br>
-    <input type="text" name="Name"><br><br>
+    <input type="text" name="userName"><br><br>
 
     <label for="fname">Password:</label><br>
     <input type="password" name="password"><br>
@@ -22,7 +22,9 @@
 
     <button type="submit" class="btn btn-primary" name="btnSubmit" id="sub" value="signUp">Register</button>
     <button type="submit" class="btn btn-primary" name="btnLogin"value="login" >Login</button>
-
+    <span style="color:red">@ViewData["EmptyStrings"]</span>
+    <span style="color:red">@ViewData["Passwords"]</span>
+    <span style="color:red">@ViewData["SuccessFull"]</span>
 </form>
 <div id="signup" style="display:none">
     <h1 style="color:red">You have been successfully registered..</h1>
