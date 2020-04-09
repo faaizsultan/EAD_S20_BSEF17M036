@@ -1,0 +1,30 @@
+﻿@{
+    Layout = null;
+}
+@{
+    ViewBag.Title = "signup";
+}
+
+<h2>Signup Screen</h2>
+<form action='@Url.Content("~/User/signUp")' method="post">
+
+    <label for="fname">UserTable:</label><br>
+    <input type="text" name="userTable" id="userT"><br>
+
+    <label for="lname">Name:</label><br>
+    <input type="text" name="Name"><br><br>
+
+    <label for="fname">Password:</label><br>
+    <input type="password" name="password"><br>
+
+    <label for="fname">Confirm Password:</label><br>
+    <input type="password" name="confirmPassword"><br>
+
+    <button type="submit" class="btn btn-primary" name="btnSubmit" id="sub" value="signUp">Register</button>
+    <button type="submit" class="btn btn-primary" name="btnLogin"value="login" >Login</button>
+
+</form>
+<div id="signup" style="display:none">
+    <h1 style="color:red">You have been successfully registered..</h1>
+</div>
+

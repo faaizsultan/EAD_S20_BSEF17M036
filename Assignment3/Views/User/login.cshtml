@@ -1,0 +1,25 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>login</title>
+</head>
+<body>
+    <div>
+        <form method="POST" action='@Url.Content("~/User/login")'>
+            <label for="fname">User name:</label><br>
+            <input type="text" id="uname" name="user"><br>
+            <label for="lname">Password:</label><br>
+            <input type="text" id="pass" name="password"><br><br>
+            <button type="submit" class="btn btn-primary" name="btnSubmit" value="login">Submit</button>
+            <button type="submit" class="btn btn-primary" name="btnSignup" value="signup">Signup</button>
+        </form>
+    </div>
+</body>
+</html>
