@@ -4,29 +4,35 @@
 @{
     ViewBag.Title = "signup";
 }
+<html>
+<head>
+    @Styles.Render("~/bundles/css")
 
-<h2>Signup Screen</h2>
-<form action='@Url.Content("~/User/signUp")' method="post">
+</head>
+<body>
+    <h2>Signup Screen</h2>
+    <form action='@Url.Content("~/User/signUp")' method="post">
 
-    <label for="fname">UserTable:</label><br>
-    <input type="text" name="userTable" id="userT"><br>
+        <label for="fname">UserTable:</label><br>
+        <input type="text" name="userTable" id="userT"><br>
 
-    <label for="lname">Name:</label><br>
-    <input type="text" name="userName"><br><br>
+        <label for="lname">Name:</label><br>
+        <input type="text" name="userName"><br><br>s
 
-    <label for="fname">Password:</label><br>
-    <input type="password" name="password"><br>
+        <label for="fname">Password:</label><br>
+        <input type="password" name="password"><br>
 
-    <label for="fname">Confirm Password:</label><br>
-    <input type="password" name="confirmPassword"><br>
+        <label for="fname">Confirm Password:</label><br>
+        <input type="password" name="confirmPassword"><br>
 
-    <button type="submit" class="btn btn-primary" name="btnSubmit" id="sub" value="signUp">Register</button>
-    <button type="submit" class="btn btn-primary" name="btnLogin"value="login" >Login</button>
-    <span style="color:red">@ViewData["EmptyStrings"]</span>
-    <span style="color:red">@ViewData["Passwords"]</span>
-    <span style="color:red">@ViewData["SuccessFull"]</span>
-</form>
-<div id="signup" style="display:none">
-    <h1 style="color:red">You have been successfully registered..</h1>
-</div>
-
+        <button type="submit" class="btn btn-primary" name="btnSubmit" id="sub" value="signUp">Register</button>
+        <button type="submit" class="btn btn-primary" name="btnLogin" value="login">Login</button>
+        <span style="color:red">@ViewData["EmptyStrings"]</span>
+        <span style="color:red">@ViewData["Passwords"]</span>
+        <span style="color:red">@ViewData["SuccessFull"]</span>
+    </form>
+    <div id="signup" style="display:none">
+        <h1 style="color:red">You have been successfully registered..</h1>
+    </div>
+</body>
+</html>

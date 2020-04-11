@@ -25,6 +25,12 @@ namespace Assignment3
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+            bundles.Add(new StyleBundle("~/bundles/css").Include(
+                                                    "~/Content/bootstrap.min.css"
+                                                    
+                                                ));
+            bundles.Add(new ScriptBundle("~/bundles/myBundle").Include(
+                "~/Scripts/jquery-3.4.1.min.js"));
         }
     }
 }
