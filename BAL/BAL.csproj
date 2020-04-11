@@ -49,6 +49,10 @@
       <Project>{7e99f664-8560-4758-a552-49f2fc2b1d5e}</Project>
       <Name>DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DataHolder\DataHolder.csproj">
+      <Project>{52147925-ea41-4624-8590-9818f2c1917f}</Project>
+      <Name>DataHolder</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BAL;
+using DataHolder;
 namespace Assignment3.Controllers
 {
     public class UserController : Controller
@@ -14,10 +15,61 @@ namespace Assignment3.Controllers
             return View();
         }
         [HttpGet]
+        public JsonResult GetParentFolders()
+        {
+
+
+            List<DataHolder.UserData> h = UserActions.getMainFolder();
+            return Json(h, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public JsonResult GetChildFolders(int id)
+        {
+            List<DataHolder.UserData> h = UserActions.getChildFolder(id);
+            return Json(h, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public JsonResult MakeNewFolder(UserData user)
+        {
+
+            UserData u = UserActions.makenewFolder(user);
+            
+            if(u!=null)
+            {
+                var h = new
+                {
+                    statusbit = 1,
+                    msg = "Success",
+                    data = u
+                };
+                return Json(h, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var h = new
+                {
+                    statusbit = 0,
+                    msg = "Failed",
+                    data = u
+                };
+            return Json(h, JsonRequestBehavior.AllowGet);
+        }
+            
+
+        }
+
+
+        [HttpGet]
         public ActionResult signUp()
         {
             return View();
         }
+        public ActionResult home()
+        {
+            return View();
+        }
+        
+        
         [HttpPost]
         public ActionResult signUp(string userTable,string userName, string password,string confirmPassword,string btnSubmit, string btnLogin)
         {
@@ -89,9 +141,5 @@ namespace Assignment3.Controllers
                 return Redirect("~/User/signUp");
             }
         }
-
-
-
-
     }
 }

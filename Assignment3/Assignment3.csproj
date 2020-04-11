@@ -165,6 +165,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\User\signUp.cshtml" />
     <Content Include="Views\User\login.cshtml" />
+    <Content Include="Views\User\home.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -187,6 +188,10 @@
     <ProjectReference Include="..\BAL\BAL.csproj">
       <Project>{ee73b386-3a49-4aea-abff-487ee6379b35}</Project>
       <Name>BAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataHolder\DataHolder.csproj">
+      <Project>{52147925-ea41-4624-8590-9818f2c1917f}</Project>
+      <Name>DataHolder</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

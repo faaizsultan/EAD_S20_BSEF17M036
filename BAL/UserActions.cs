@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL;
+using DataHolder;
+
 namespace BAL
 {
     public static class UserActions
@@ -25,6 +27,18 @@ namespace BAL
         {
             return (!UserTableOps.isValidUser(userName,password));
         }
+        public static UserData makenewFolder(UserData data)
+        {
+            return UserTableOps.makeNewFolder(data);
+        }
 
+        public static List<UserData> getChildFolder(int id)
+        {
+            return UserTableOps.getChildFolders(id);
+        }
+        public static List<UserData> getMainFolder()
+        {
+            return UserTableOps.getParentFolders();
+        }
     }
 }
