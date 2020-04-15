@@ -14,25 +14,26 @@ namespace Assignment3.Controllers
         {
             return View();
         }
+        #region Folder Related Functions
         [HttpGet]
         public JsonResult GetParentFolders()
         {
 
 
-            List<DataHolder.UserData> h = UserActions.getMainFolder();
+            List<DataHolder.FolderData> h = BalUserActions.getMainFolder();
             return Json(h, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
         public JsonResult GetChildFolders(int id)
         {
-            List<DataHolder.UserData> h = UserActions.getChildFolder(id);
+            List<DataHolder.FolderData> h = BalUserActions.getChildFolder(id);
             return Json(h, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
-        public JsonResult MakeNewFolder(UserData user)
+        public JsonResult MakeNewFolder(FolderData user)
         {
 
-            UserData u = UserActions.makenewFolder(user);
+            FolderData u = BalUserActions.makenewFolder(user);
             
             if(u!=null)
             {
@@ -57,18 +58,44 @@ namespace Assignment3.Controllers
             
 
         }
+        public ActionResult home()
+        {
+            return View();
+        }
+        #endregion
 
 
+
+        #region Signing in sFuctions
         [HttpGet]
         public ActionResult signUp()
         {
             return View();
         }
-        public ActionResult home()
+        [HttpPost]
+        public JsonResult signUpbyAjax(UserData user)
         {
-            return View();
+            ViewData["EmptyStrings"] = "";
+            ViewData["Passwords"] = "";
+            ViewData["Successfull"] = "";
+            if(String.IsNullOrEmpty(user.userName) || String.IsNullOrEmpty(user.password))
+            {
+                var h = new {msg="UserName or Password is Empty" };
+                ViewData["EmptryStrings"] = "One of the field is Empty";
+                return Json(h, JsonRequestBehavior.AllowGet);
+            }
+            else if(BalUserActions.registerUser(user.userName,user.password))
+            {
+                var h = new { msg = "SuccessFull signup" };
+                
+                return Json(h, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var h = new { msg = "Already A user" };
+                return Json(h, JsonRequestBehavior.AllowGet);
+            }
         }
-        
         
         [HttpPost]
         public ActionResult signUp(string userTable,string userName, string password,string confirmPassword,string btnSubmit, string btnLogin)
@@ -96,7 +123,7 @@ namespace Assignment3.Controllers
            else //has pressed Submit button to register himself..   
            {
 
-                    if ((UserActions.registerUser(userName, password, userTable)))
+                    if ((BalUserActions.registerUser(userName, password)))
                     {
                         ViewData["Successfull"] = "You have been successfully registered";
                         return View();
@@ -125,7 +152,7 @@ namespace Assignment3.Controllers
                     ViewData["Msg"] = "One of the fields is Missing";
                     return View();
                 }
-                else if (UserActions.isAlreadyUser(userName,password))
+                else if (BalUserActions.isAlreadyUser(userName,password))
                 {
                     ViewData["Msg"] = "Logged in Successfully";
                     return View();
@@ -141,5 +168,7 @@ namespace Assignment3.Controllers
                 return Redirect("~/User/signUp");
             }
         }
+        #endregion
+
     }
 }
