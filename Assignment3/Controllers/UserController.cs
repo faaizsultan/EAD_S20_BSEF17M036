@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using BAL;
 using DataHolder;
+using Security;
 namespace Assignment3.Controllers
 {
     public class UserController : Controller
@@ -20,20 +21,20 @@ namespace Assignment3.Controllers
         {
 
 
-            List<DataHolder.FolderData> h = BalUserActions.getMainFolder();
+            List<DataHolder.FolerData> h = BalUserActions.getMainFolder();
             return Json(h, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
         public JsonResult GetChildFolders(int id)
         {
-            List<DataHolder.FolderData> h = BalUserActions.getChildFolder(id);
+            List<DataHolder.FolerData> h = BalUserActions.getChildFolder(id);
             return Json(h, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
-        public JsonResult MakeNewFolder(FolderData user)
+        public JsonResult MakeNewFolder(FolerData user)
         {
 
-            FolderData u = BalUserActions.makenewFolder(user);
+            FolerData u = BalUserActions.makenewFolder(user);
             
             if(u!=null)
             {
@@ -58,11 +59,9 @@ namespace Assignment3.Controllers
             
 
         }
-        public ActionResult home()
-        {
-            return View();
-        }
+        
         #endregion
+        
 
 
 
@@ -76,8 +75,7 @@ namespace Assignment3.Controllers
         public JsonResult signUpbyAjax(UserData user)
         {
             ViewData["EmptyStrings"] = "";
-            ViewData["Passwords"] = "";
-            ViewData["Successfull"] = "";
+            
             if(String.IsNullOrEmpty(user.userName) || String.IsNullOrEmpty(user.password))
             {
                 var h = new {msg="UserName or Password is Empty" };
@@ -97,46 +95,6 @@ namespace Assignment3.Controllers
             }
         }
         
-        [HttpPost]
-        public ActionResult signUp(string userTable,string userName, string password,string confirmPassword,string btnSubmit, string btnLogin)
-        {
-            ViewData["EmptyStrings"] = "";
-            ViewData["Passwords"] = "";
-            ViewData["Successfull"] = "";
-
-            if(String.IsNullOrEmpty(btnSubmit) && (!String.IsNullOrEmpty(btnLogin))) //has clicked on Login Button
-            {
-                return Redirect("~/User/login");
-            }
-            
-           else if (String.IsNullOrEmpty(userName) || String.IsNullOrEmpty(confirmPassword) || String.IsNullOrEmpty(password))
-                {
-                    ViewData["EmptyStrings"] = "One of the fields is Empty";
-                    return View();
-
-                }
-           else if (password != confirmPassword)
-           {
-                    ViewData["Passwords"] = "Passwords Do not Match";
-                    return View();
-                }
-           else //has pressed Submit button to register himself..   
-           {
-
-                    if ((BalUserActions.registerUser(userName, password)))
-                    {
-                        ViewData["Successfull"] = "You have been successfully registered";
-                        return View();
-                    }
-                    else
-                    {
-                        ViewData["SuccessFull"] = "Already Registered";
-                        return View();
-                    }
-
-           }
-        }
-        
         [HttpGet]
         public ActionResult login()
         {
@@ -154,8 +112,14 @@ namespace Assignment3.Controllers
                 }
                 else if (BalUserActions.isAlreadyUser(userName,password))
                 {
+                    UserData temp = new UserData();
+                    temp.userName = userName;
+                    temp.password = password;
+                    Security.SessionManager.User = temp;
+                    
                     ViewData["Msg"] = "Logged in Successfully";
-                    return View();
+                    
+                    return Redirect("~/User/home");
                 }
                 else
                 {
@@ -167,6 +131,14 @@ namespace Assignment3.Controllers
             {
                 return Redirect("~/User/signUp");
             }
+        }
+        public ActionResult home()
+        {
+            if(SessionManager.IsValidUser)
+            {
+                return View();
+            }
+            return View("login");
         }
         #endregion
 
