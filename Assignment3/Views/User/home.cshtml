@@ -1,0 +1,175 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    
+
+    
+    <title>home</title>
+    @Scripts.Render("~/bundles/myBundle")
+    @Styles.Render("~/bundles/css")
+</head>
+
+<script>
+var newFolderLocationId=0;
+$(document).ready(function(){
+    
+    var dataToSend = {"action": "viewParentFolders"};//view all parentFolders...
+
+    var settings= {
+				type: "GET",
+				dataType: "json",
+				url: '@Url.Content("~/User/GetParentFolders")',
+				data: '{}',
+				success: mainfolders,
+				error: OnError
+            };
+
+			$.ajax(settings);
+			console.log('request sent');
+        });
+       function mainfolders(r) {
+              for (let index = 0; index < r.length; index++) {
+               let btname = r[index].folderName;
+               let identity = r[index].ID;
+               let buttons = $('<input></input>').attr({ id: identity, type: 'button', name: 'btn' + identity, value: btname, class: 'btn btn-success', onclick: "this.style.backgroundColor = '#000000'", ondblclick: "showChild(this.id)" });
+               $("#btdiv").append(buttons);
+           }
+}
+function OnError(f){
+  
+    alert("An error has occured while Fethcing Main");
+}
+</script>
+<script>
+    
+    function showChild(i) {
+        
+        newFolderLocationId = i; //storing the id in global variable to dentify where to make the new folder..
+
+        var foldername = document.getElementById("foldernameplace");  //now removeing the folder name.
+        while (foldername.firstChild) {
+            foldername.removeChild(foldername.lastChild);
+        }
+        var text = document.createElement('p');
+        text.innerText = $("#" + i).attr("value");
+        foldername.appendChild(text); //making the child folder as the main folder name..
+        
+
+        var p = document.getElementById("btdiv"); //now removing the child folders..
+        console.log(p);
+        while (p.firstChild) {
+            p.removeChild(p.lastChild);
+        }
+        
+        let datatosend = { id: i };//fetch child folders against the ID.
+        let set = {
+            type: "POST",
+            dataType: "json",
+            url: '@Url.Content("~/User/GetChildFolders")',
+            data: datatosend,
+            success: makenewChild,
+            error: OnError
+        };
+
+        $.ajax(set);
+        console.log('request sent for child folders');
+    }
+    function makenewChild(childs) {
+        console.log("Make New Childs");
+        for (let index = 0; index < childs.length; index++) {
+            let btname = childs[index].folderName;
+            let ident = childs[index].ID;
+            let butt = $('<input></input>').attr({ id: ident, type: 'button', name: 'btn'+ident, value: btname, class: 'btn btn-success', onclick: "this.style.backgroundColor = '#000000'", ondblclick: "showChild(this.id)" });
+            $("#btdiv").append(butt);
+        }
+    }
+</script>
+<script>
+    // make  a new folder..
+    function makefolder() {
+        
+        let newFname = document.getElementById("newFolderName").value;
+        console.log(newFname);
+        if (newFname == "") {
+            alert("Name is must for a folder...");
+        }
+        else {
+            let datatosend = { folderName: newFname, ID:newFolderLocationId};//make new folders..
+            let obj = datatosend;
+            let set = {
+                type: "POST",
+                dataType: "json",
+                url: '@Url.Content("~/User/MakeNewFolder")',
+                data: obj,
+                success: makefolderSuccess,
+                error: OnError
+            };
+
+            $.ajax(set);
+            console.log('request sent for child folders');
+
+        }
+    }
+    function makefolderSuccess(r) {
+        
+        alert(r.msg);
+        if (r.statusbit !=0) {
+            let butt = $('<input></input>').attr({ id: r.data.ID, type: 'button', name: 'btn' + r.data.ID, value: r.data.folderName, class: 'btn btn-success', onclick: "this.style.backgroundColor = '#000000'", ondblclick: "showChild(this.id)" });
+            $("#btdiv").append(butt);
+        } 
+    }
+
+</script>
+<body>
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" id="mybt">
+        + New  Folder
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Add New Folder</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="folderdiv">
+                    Enter the Name Of your Folder: <input type="text" name="newFolderName" id="newFolderName">
+                </div>
+                <!-- <div class="modal-footer"> -->
+                <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+                <button type="button" class="btn btn-primary" id="btnCreateFolder" onClick="makefolder()">Create new Folder</button>
+                <!-- </div> -->
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid" id="pdiv">
+        <div class="p-3 mb-2 bg-dark text-white" id="divname">
+            <h2>Folders</h2>
+            <div id="foldernameplace">
+                <p>Main Folders<p>
+            </div>
+        </div>
+        <div id="btdiv">
+
+        </div>
+    </div>
+
+</body>
+
+
+
+</html>
