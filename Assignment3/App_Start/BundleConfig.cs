@@ -9,6 +9,8 @@ namespace Assignment3
         public static void RegisterBundles(BundleCollection bundles)
         {
             BundleTable.EnableOptimizations = true;
+
+
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
@@ -31,7 +33,8 @@ namespace Assignment3
                                                     
                                                 ));
             bundles.Add(new ScriptBundle("~/bundles/myBundle").Include(
-                "~/Scripts/jquery-3.4.1.min.js"));
+                "~/Scripts/jquery-3.4.1.min.js",
+                "~/Scripts/bootstrap.min.js"));
         }
     }
 }
