@@ -18,6 +18,10 @@ namespace Assignment4
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            var xmlFormatters = GlobalConfiguration.Configuration.Formatters.XmlFormatter;
+            var appxmlType = xmlFormatters.SupportedMediaTypes.FirstOrDefault(t => t.MediaType == "application/xml");
+            GlobalConfiguration.Configuration.Formatters.XmlFormatter.SupportedMediaTypes.Remove(appxmlType);
         }
     }
 }
