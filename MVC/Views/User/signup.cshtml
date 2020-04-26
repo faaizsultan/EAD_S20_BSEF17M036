@@ -1,0 +1,81 @@
+﻿@{
+    Layout = null;
+}
+@{
+    ViewBag.Title = "signup";
+}
+<html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    @Styles.Render("~/bundles/css")
+    @Scripts.Render("~/bundles/myBundle")
+</head>
+<script>
+    var basePath = 'https://localhost:44325/';
+    function register(event) {
+        
+        var username = $("#userName").val();
+        var password = $("#userPass").val();
+        
+        var confirmPassword = $("#confirmPassword").val();
+        
+        if (username === "" || password === "" || confirmPassword === "") {
+            alert("One of the fields is empty");
+            
+        }
+        else if(password!== confirmPassword)
+        {
+            alert("passwords do not match");
+             
+        }
+        else
+        {
+            var temp;
+            var dataTOsend = { userName: username, password: password };
+            var settings = {
+                type: "POST",
+                dataType: "json",
+                url: basePath+"api/UserData/signUpbyAjax",
+                data: dataTOsend,
+                success: function (d) {
+                    debugger;
+                    alert(d.data);
+                },
+                error: function (d) {
+                    debugger;
+                    alert(d.data);
+                    alert("NO NO");
+                }
+            };
+            $.ajax(settings);
+             
+        }
+    
+
+    }
+</script>
+<body>
+    <h2>Signup Screen</h2>
+    <form action='@Url.Content("~/User/login")' method="get">
+
+       
+        <label for="lname">Name:</label><br>
+        <input type="text" id="userName" name="userName"><br><br>
+
+        <label for="fname">Password:</label><br>
+        <input type="password" id="userPass" name="password"><br>
+
+        <label for="fname">Confirm Password:</label><br>
+        <input type="password" id="confirmPassword" name="confirmPassword"><br>
+
+        <button type="button" class="btn btn-primary" name="btnSubmit" id="submit" onclick="register(this)" value="signUp">Register</button>
+        <button type="submit" class="btn btn-primary" name="btnLogin" id="loginbtn" value="login">Login</button>
+        <span style="color:red">@ViewData["EmptyStrings"]</span>
+    </form>
+    <div id="signup" style="display:none">
+        <h1 style="color:red">You have been successfully registered..</h1>
+    </div>
+</body>
+</html>
