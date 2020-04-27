@@ -1,22 +1,14 @@
 ﻿
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/MyLayout.cshtml";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <title>home</title>
-    @*@Scripts.Render("~/bundles/myBundle")
-        @Styles.Render("~/bundles/css")*@
-</head>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>*@
+
+
+@section scripts{
 
 <script>
     debugger;
@@ -25,8 +17,6 @@
         sessionStorage.setItem('token','@TempData["Token"]');
     }
     var userToken = sessionStorage.getItem('token');
-    alert(sessionStorage.getItem('token'));
-    alert(userToken);
     var newFolderLocationId = 0;
 $(document).ready(function(){
 
@@ -86,7 +76,7 @@ $(document).ready(function(){
             let set = {
                 type: "POST",
                 dataType: "json",
-                url: basePath + "api/UserData/GetChildFolders?id=" + i,
+                url: basePath + "api/UserData/GetChildFolders?id="+i,
                 headers: {
                     'Authorization': "Bearer " + sessionStorage.getItem('token'),
                 },
@@ -147,8 +137,7 @@ $(document).ready(function(){
     
  
 </script>
-<body>
-
+    }
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" id="mybt">
         + New  Folder
@@ -188,38 +177,7 @@ $(document).ready(function(){
         </div>
     </div>
 
-</body>
-
-@*//    $(document).keydown(function (e) {
-//    if (e.key=="F5") {
-//        window.onbeforeunload = ConfirmLeave;
-//    }
-//    else if (e.key.toUpperCase() == "W" && prevKey == "CONTROL") {
-//        window.onbeforeunload = ConfirmLeave;
-//    }
-//    else if (e.key.toUpperCase() == "R" && prevKey == "CONTROL") {
-//        window.onbeforeunload = ConfirmLeave;
-//    }
-//    else if (e.key.toUpperCase() == "F4" && (prevKey == "ALT" || prevKey == "CONTROL")) {
-//        window.onbeforeunload = ConfirmLeave;
-//    }
-//    prevKey = e.key.toUpperCase();
-//});
-//    $(window).on('mouseover', (function () {
-//    window.onbeforeunload = null;
-//}));
-//$(window).on('mouseout', (function () {
-//    window.onbeforeunload = ConfirmLeave;
-//}));
-//    function ConfirmLeave() {
-
-//        alert("Clearing the local Storage");
-//        sessionStorage.clear();
-//}
-//var prevKey="";
 
 
 
-    //view all parentFolders...*@
 
-</html>
